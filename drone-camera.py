@@ -1,11 +1,14 @@
+###### This script is to initialise the drone (once you've connected to it by wifi)
+###### then to turn on it's camera
+
 from djitellopy import Tello
 import cv2
 import time
 
 ##########################################
-width = 320  # width of the image
-height = 240
-startCounter = 0  # if you don't want drone to fly then put 1, if you do, put 0
+width = 640  # width of the image
+height = 480
+startCounter = 1  # if you don't want drone to fly then put 1, if you do, put 0
 ##########################################
 
 # Connect to tello & initialise all of the velocities to zero, for obvious reasons
@@ -35,18 +38,8 @@ while True:
     # Show the image
     cv2.imshow("MyResult", img)
 
-    # To go up in the beginning
-    if startCounter == 0:
-        me.takeoff()
-        time.sleep(3)
-        me.rotate_clockwise(180) # degrees
-        time.sleep(2)
-        me.move_left(20) # these commands are for distances in cm, not velocity
-        time.sleep()
-        me.land()
-        startCounter = 1
-
     # Wait for the q button to stop (of note, you need to have waitKety defined before imshow will work)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         me.land()
         break
+
